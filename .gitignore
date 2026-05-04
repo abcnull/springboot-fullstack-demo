@@ -39,6 +39,7 @@ build/
 doc/
 
 ### Frontend ###
+frontend/node/
 frontend/node_modules/
 frontend/dist/
 backend/src/main/resources/public/
