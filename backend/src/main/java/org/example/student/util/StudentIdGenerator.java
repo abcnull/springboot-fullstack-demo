@@ -3,6 +3,7 @@ package org.example.student.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+// 学号生成器
 public class StudentIdGenerator {
 
     private static final String PREFIX = "STU";

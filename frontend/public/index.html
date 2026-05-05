@@ -1,12 +1,56 @@
+<!--
+  public/index.html — Vue 单页应用（SPA）的 HTML 模板
+
+  【知识点】什么是 SPA（Single Page Application）？
+  单页应用：整个项目只有这一个 HTML 页面，所有页面切换都是通过 JavaScript 动态替换内容实现的，
+  而不是传统的多页面跳转（每次跳转都请求一个新的 HTML 文件）。
+
+  【知识点】这个文件的作用
+  1. 作为 Webpack 打包时的 HTML 模板
+  2. 打包时，Webpack 会自动将编译好的 JS/CSS 文件注入到这个模板中
+  3. 最终在 dist/ 中生成带有实际资源引用的 index.html
+
+  【知识点】构建前后对比
+  构建前（源码）：                       构建后（dist/index.html）：
+  <div id="app"></div>                 <div id="app"></div>
+  （空的挂载点）                        <script src="/static/js/app.xxx.js"></script>
+                                       <link href="/static/css/app.xxx.css">
+                                       （Webpack 自动注入了资源引用）
+-->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!--
+    viewport 元标签：控制页面在移动设备上的缩放行为
+    width=device-width  → 宽度等于设备宽度
+    initial-scale=1.0   → 初始缩放比例为 1（不缩放）
+    这是移动端适配的基本配置
+  -->
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
   <title>学生管理系统</title>
 </head>
 <body>
+  <!--
+    id="app" 的 div 是 Vue 应用的挂载点（Mount Point）
+
+    【知识点】Vue 挂载机制
+    1. Vue 实例通过 $mount('#app') 或 el: '#app' 挂载到这个 DOM 元素上
+    2. 挂载后，Vue 会接管这个 div 内的所有内容
+    3. Vue 的模板（template）会被编译并渲染替换到这个 div 中
+    4. 之后所有的页面内容都由 Vue 动态管理
+
+    这个 div 中通常不写任何内容，所有 UI 都由 Vue 组件生成。
+  -->
   <div id="app"></div>
+
+  <!--
+    注意：这里不需要手动引入 JS/CSS 文件。
+    Webpack 打包时会根据 vue.config.js 中的配置，
+    自动将 entry（入口 JS）和相关资源注入到这个 HTML 模板中。
+  -->
 </body>
 </html>

@@ -1,5 +1,6 @@
 package org.example.student.exception;
 
+// 自定义的业务异常类
 public class BusinessException extends RuntimeException {
     private Integer code;
 

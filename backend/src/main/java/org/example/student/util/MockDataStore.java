@@ -5,6 +5,7 @@ import org.example.student.model.Student;
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
+// 模拟数据库中的数据
 public class MockDataStore {
 
     private static final ConcurrentHashMap<String, Student> STORE = new ConcurrentHashMap<>();

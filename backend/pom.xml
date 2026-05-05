@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.6.13</version>
-        <relativePath/>
+        <relativePath />
     </parent>
 
     <groupId>org.example</groupId>
@@ -44,23 +44,31 @@
     <build>
         <plugins>
             <!-- Spring Boot Maven Plugin -->
+            <!-- 支持 mvn spring-boot:run 直接执行插件目标 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <!-- 配置中明确指定了入口类 -->
                     <mainClass>org.example.student.StudentApplication</mainClass>
                 </configuration>
             </plugin>
 
             <!-- Frontend Maven Plugin: 安装前端依赖并打包 -->
+            <!-- 这个插件的作用是 在 Maven 构建过程中集成前端构建流程，包括：安装 Node.js 和 npm，执行 npm install，执行 npm run build -->
+            <!-- 使用默认阶段 generate-resources -->
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
                 <version>1.12.1</version>
                 <configuration>
+                    <!-- 配置中明确指定了前端目录为 ../frontend -->
                     <workingDirectory>${project.basedir}/../frontend</workingDirectory>
                 </configuration>
                 <executions>
+                    <!-- 执行 install-node-and-npm 目标，安装 Node.js 和 npm -->
+                    <!-- 如果已有，也会重新把 node，npm 可执行文件进行覆盖安装（非系统全局），安装在
+                    ${project.basedir}/../frontend/node/ 中 -->
                     <execution>
                         <id>install node and npm</id>
                         <goals>
@@ -70,6 +78,8 @@
                             <nodeVersion>v16.20.0</nodeVersion>
                         </configuration>
                     </execution>
+                    <!-- 执行 npm install 目标，安装前端依赖 -->
+                    <!-- 安装到 ${project.basedir}/../frontend/node_modules/ 中 -->
                     <execution>
                         <id>npm install</id>
                         <goals>
@@ -79,6 +89,10 @@
                             <arguments>install</arguments>
                         </configuration>
                     </execution>
+                    <!-- 执行 npm run build 目标，打包前端应用，本质是执行 package.json 里定义的 build 脚本：源代码（src/）→
+                    编译/打包 → 生产环境静态资源（dist/） -->
+                    <!-- node 和 npm 是构建过程中需要的工具。最终构建出的 dist 需要转移到 resources/public/，dist
+                    中的静态资源才是真正网页所需要的 -->
                     <execution>
                         <id>npm run build</id>
                         <goals>
@@ -98,14 +112,21 @@
                 <executions>
                     <execution>
                         <id>copy-frontend-build</id>
+                        <!-- mvn 生成资源后执行 -->
                         <phase>generate-resources</phase>
+                        <!-- 复制资源到 public 目录 -->
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
+                            <!-- 输出目录 -->
+                            <!-- ${basedir} 是当前项目的根目录，如 /xxx/springboot-fullstack-demo/backend -->
                             <outputDirectory>${basedir}/src/main/resources/public</outputDirectory>
                             <resources>
                                 <resource>
+                                    <!-- 前端构建产物目录 -->
+                                    <!-- ${project.basedir} 是 ${basedir} 的简写形式，如
+                                    /xxx/springboot-fullstack-demo/backend -->
                                     <directory>${project.basedir}/../frontend/dist</directory>
                                 </resource>
                             </resources>

@@ -7,6 +7,10 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+// 全局异常处理类（Spring 自动管理，使用时无需注入）
+/*
+组合 @ControllerAdvice 和 @ResponseBody，用来拦截所有 Controller 抛出的异常 ，统一处理并返回响应
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
