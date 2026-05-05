@@ -6,6 +6,10 @@
 
 此项目的目的是作为 demo 进行演示：前后端分离下，Spring Boot 开发的后端逻辑和 Vue2 开发的前端代码在同一个项目中时，项目是如何开发的
 
+<center>
+<img src="https://github.com/abcnull/Image-Resources/blob/master/springboot-fullstack-demo/student_management.jpg" alt="student_management.jpg" />
+</center>
+
 ## 快速开始
 
 ### 环境要求
